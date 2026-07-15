@@ -1,9 +1,9 @@
-# zz.scoop-bucket
+# scoop-bucket
 
 Personal [Scoop](https://scoop.sh) bucket.
 
 ```powershell
-scoop bucket add zz https://github.com/zanderzhng/zz.scoop-bucket
+scoop bucket add zz https://github.com/zanderzhng/scoop-bucket
 scoop install zz/codexplusplus
 ```
 
