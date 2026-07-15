@@ -19,6 +19,16 @@
             "codexplusplus-manager"
         ]
     ],
+    "shortcuts": [
+        [
+            "codex-plus-plus.exe",
+            "Codex++"
+        ],
+        [
+            "codex-plus-plus-manager.exe",
+            "Codex++ Manager"
+        ]
+    ],
     "checkver": "github",
     "autoupdate": {
         "architecture": {
