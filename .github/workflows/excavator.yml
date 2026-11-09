@@ -3,17 +3,49 @@ name: Excavator
 on:
   workflow_dispatch:
   schedule:
-    - cron: '17 * * * *'
+    - cron: '17 */6 * * *'
 
 permissions:
   contents: write
 
+concurrency:
+  group: excavator-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   excavate:
     runs-on: windows-latest
+    timeout-minutes: 30
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SKIP_UPDATED: '1'
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: ScoopInstaller/GithubActions@main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SKIP_UPDATED: '1'
+      - name: Check out bucket
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      # Retry the reviewed composite action, not a moving upstream branch.
+      # Only intermediate attempts tolerate failure; the final attempt must pass.
+      - name: Excavate (attempt 1 of 3)
+        id: excavate1
+        continue-on-error: true
+        uses: ScoopInstaller/GithubActions@5bceeda181721d9d10a18fdcc3ddca6f33467ae6
+
+      - name: Wait before second attempt
+        if: steps.excavate1.outcome == 'failure'
+        shell: pwsh
+        run: Start-Sleep -Seconds 60
+
+      - name: Excavate (attempt 2 of 3)
+        id: excavate2
+        if: steps.excavate1.outcome == 'failure'
+        continue-on-error: true
+        uses: ScoopInstaller/GithubActions@5bceeda181721d9d10a18fdcc3ddca6f33467ae6
+
+      - name: Wait before final attempt
+        if: steps.excavate2.outcome == 'failure'
+        shell: pwsh
+        run: Start-Sleep -Seconds 60
+
+      - name: Excavate (attempt 3 of 3)
+        if: steps.excavate2.outcome == 'failure'
+        uses: ScoopInstaller/GithubActions@5bceeda181721d9d10a18fdcc3ddca6f33467ae6
