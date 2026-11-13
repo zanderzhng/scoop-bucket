@@ -1,12 +1,12 @@
 {
-    "version": "2.6.7",
+    "version": "2.6.8",
     "description": "Enhanced launcher and management tool for the Codex desktop app",
     "homepage": "https://github.com/BigPizzaV3/CodexPlusPlus",
     "license": "AGPL-3.0-only",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/BigPizzaV3/CodexPlusPlus/releases/download/v2.6.7/CodexPlusPlus-2.6.7-windows-x64.zip",
-            "hash": "c67ae98dd4ffe9b04430a4301e117cf6d699663a2fe485cab634491ccf86e8f5"
+            "url": "https://github.com/BigPizzaV3/CodexPlusPlus/releases/download/v2.6.8/CodexPlusPlus-2.6.8-windows-x64.zip",
+            "hash": "47c3e97ed9d054480bff14cf918f827f6deb0dfbf3928cb4731a20e72b6a94a4"
         }
     },
     "bin": [
